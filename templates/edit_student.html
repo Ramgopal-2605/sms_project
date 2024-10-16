@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student Profile</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Student Profile</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <label for="date_of_birth">Date of Birth:</label>
+            <input type="date" id="date_of_birth" name="date_of_birth" value="{{ student.date_of_birth|date:'Y-m-d' }}" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" required>{{ student.address }}</textarea>
+
+            <label for="contact_number">Contact Number:</label>
+            <input type="text" id="contact_number" name="contact_number" value="{{ student.contact_number }}" required>
+
+            <button type="submit">Update Profile</button>
+        </form>
+
+        <a href="{% url 'manage_student_profiles' %}">Back to Student Profiles</a>
+    </div>
+</body>
+</html>

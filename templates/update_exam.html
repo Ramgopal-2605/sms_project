@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Exam</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Update Exam</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <label for="name_of_exam">Name of Exam:</label>
+            <input type="text" id="name_of_exam" name="name_of_exam" value="{{ exam.name_of_exam }}" required>
+
+            <label for="subject">Subject:</label>
+            <select id="subject" name="subject" required>
+                <option value="">Select Subject</option>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}" {% if subject.id == exam.subject_id %}selected{% endif %}>{{ subject.subject_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="exam_date">Exam Date:</label>
+            <input type="date" id="exam_date" name="exam_date" value="{{ exam.exam_date }}" required>
+
+            <label for="start_time">Start Time:</label>
+            <input type="time" id="start_time" name="start_time" value="{{ exam.start_time }}" required>
+
+            <label for="end_time">End Time:</label>
+            <input type="time" id="end_time" name="end_time" value="{{ exam.end_time }}" required>
+
+            <label for="class_assigned">Class Assigned:</label>
+            <select id="class_assigned" name="class_assigned" required>
+                <option value="">Select Class</option>
+                {% for class in classes %}
+                    <option value="{{ class.id }}" {% if class.id == exam.class_assigned_id %}selected{% endif %}>{{ class.class_name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Update Exam</button>
+        </form>
+
+        <a href="{% url 'schedule_exam' %}">Back to Scheduled Exams</a>
+    </div>
+</body>
+</html>

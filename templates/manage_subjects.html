@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Subjects</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Subjects</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="subject_name">Subject Name:</label>
+            <input type="text" id="subject_name" name="subject_name" required>
+
+            <label for="class_assigned">Class Assigned:</label>
+            <select id="class_assigned" name="class_assigned" required>
+                <option value="">Select Class</option> <!-- Default option -->
+                {% for class in classes %}
+                    <option value="{{ class.id }}">{{ class.class_name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Add Subject</button>
+        </form>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <h2>Existing Subjects</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Class Assigned</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subject in existing_subjects %}
+                    <tr>
+                        <td>{{ subject.subject_name }}</td>
+                        <td>{{ subject.class_assigned.class_name }}</td> <!-- Class name -->
+                        <td>
+                            <button onclick="editSubject('{{ subject.id }}', '{{ subject.subject_name }}', '{{ subject.class_assigned.id }}')">Edit</button>
+                            <form method="POST" action="{% url 'delete_subject' subject.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+        function editSubject(subjectId, subjectName, classId) {
+            document.getElementById('subject_id').value = subjectId;
+            document.getElementById('subject_name').value = subjectName;
+            document.getElementById('class_assigned').value = classId;
+
+            // Show the edit form if hidden (you need to implement this)
+            document.querySelector('div[style="display:none;"]').style.display = 'block';
+        }
+
+        function submitEdit() {
+            const subjectId = document.getElementById('subject_id').value;
+            const subjectName = document.getElementById('subject_name').value;
+            const classId = document.getElementById('class_assigned').value;
+
+            // Implement your AJAX or form submission logic here
+        }
+    </script>
+</body>
+</html>

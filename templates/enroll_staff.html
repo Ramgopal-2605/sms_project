@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enroll Staff</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Enroll New Staff</h2>
+        <form method="POST" action="{% url 'enroll_staff' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="staff_name">Staff Name:</label>
+                <input type="text" id="staff_name" name="staff_name" required>
+            </div>
+            <div class="form-group">
+                <label for="staff_id">Staff ID:</label>
+                <input type="text" id="staff_id" name="staff_id" required>
+            </div>
+            <div class="form-group">
+                <label for="staff_pwd">Password:</label>
+                <input type="password" id="staff_pwd" name="staff_pwd" required>
+            </div>
+            <div class="form-group">
+                <label for="subject_assigned">Subject Assigned:</label>
+                <select id="subject_assigned" name="subject_assigned" required>
+                    <option value="">Select Subject</option>
+                    {% for subject in subjects %}
+                        <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date_of_hire">Date of Hire:</label>
+                <input type="date" id="date_of_hire" name="date_of_hire" required>
+            </div>
+            <div class="form-group">
+                <label for="designation">Designation:</label>
+                <input type="text" id="designation" name="designation" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="True">Permanent</option>
+                    <option value="False">Temporary</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="salary">Salary:</label>
+                <input type="number" id="salary" name="salary" required>
+            </div>
+            <button type="submit">Enroll Staff</button>
+        </form>
+        <p><a href="{% url 'admin_dashboard' %}">Back to Dashboard</a></p>
+    </div>
+</body>
+</html>

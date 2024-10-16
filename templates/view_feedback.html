@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Feedback</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Student Feedback</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feedback in student_feedbacks %}
+                    <tr>
+                        <td>{{ feedback.student_name }}</td>
+                        <td>{{ feedback.message }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Staff Feedback</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feedback in staff_feedbacks %}
+                    <tr>
+                        <td>{{ feedback.staff_name }}</td>
+                        <td>{{ feedback.message }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Registration</h2>
+        <form method="POST" action="{% url 'registration' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="admin_name">Admin Name:</label>
+                <input type="text" id="admin_name" name="admin_name" required>
+            </div>
+            <div class="form-group">
+                <label for="admin_id">Admin ID:</label>
+                <input type="text" id="admin_id" name="admin_id" required>
+            </div>
+            <div class="form-group">
+                <label for="admin_pwd">Password:</label>
+                <input type="password" id="admin_pwd" name="admin_pwd" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html>

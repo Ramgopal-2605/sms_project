@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">  <!-- Add your CSS file if necessary -->
+</head>
+<body>
+    <div class="container">
+        <h1>Mark Attendance for {{ class.name }}</h1>  <!-- Assuming Class has a 'name' field -->
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Student ID</th>
+                        <th>Present</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.student_name }}</td>
+                            <td>{{ student.student_id }}</td>
+                            <td>
+                                <input type="checkbox" name="attendance_{{ student.student_id }}">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="date" value="{{ today|date:'Y-m-d' }}">  <!-- Current date -->
+            <button type="submit">Submit Attendance</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance for {{ class.class_name }}</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Mark Attendance for {{ class.class_name }}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <h3>Date: <input type="date" name="date" required></h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Present</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.student_name }} (ID: {{ student.student_id }})</td>
+                            <td>
+                                <input type="checkbox" name="attendance_{{ student.student_id }}">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Submit Attendance</button>
+        </form>
+        <a href="{% url 'manage_class_attendance' %}">Back to Class Attendance</a>
+    </div>
+</body>
+</html> {% endcomment %}

@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Exam</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Schedule Exam</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <label for="name_of_exam">Name of Exam:</label>
+            <input type="text" id="name_of_exam" name="name_of_exam" required>
+
+            <label for="subject">Subject:</label>
+            <select id="subject" name="subject" required>
+                <option value="">Select Subject</option>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="exam_date">Exam Date:</label>
+            <input type="date" id="exam_date" name="exam_date" required>
+
+            <label for="start_time">Start Time:</label>
+            <input type="time" id="start_time" name="start_time" required>
+
+            <label for="end_time">End Time:</label>
+            <input type="time" id="end_time" name="end_time" required>
+
+            <label for="class_assigned">Class Assigned:</label>
+            <select id="class_assigned" name="class_assigned" required>
+                <option value="">Select Class</option>
+                {% for class in classes %}
+                    <option value="{{ class.id }}">{{ class.class_name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Schedule Exam</button>
+        </form>
+
+        <h3>Scheduled Exams</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name of Exam</th>
+                    <th>Subject</th>
+                    <th>Exam Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Class Assigned</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exam in exams %}
+                    <tr>
+                        <td>{{ exam.name_of_exam }}</td>
+                        <td>{{ exam.subject.subject_name }}</td>
+                        <td>{{ exam.exam_date }}</td>
+                        <td>{{ exam.start_time }}</td>
+                        <td>{{ exam.end_time }}</td>
+                        <td>{{ exam.class_assigned.class_name }}</td>
+                        <td>
+                            <a href="{% url 'update_exam' exam.id %}">Edit</a>
+                            <form method="POST" action="{% url 'delete_exam' exam.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Leaves</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Manage Leaves</h2>
+
+        <h3>Student Leave Reports</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Leave Reason</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in student_leaves %}
+                    <tr>
+                        <td>{{ leave.student.student_name }}</td>
+                        <td>{{ leave.reason }}</td>
+                        <td>{{ leave.start_date }}</td>
+                        <td>{{ leave.end_date }}</td>
+                        <td>{{ leave.status }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'manage_leaves' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="leave_type" value="student">
+                                <input type="hidden" name="leave_id" value="{{ leave.id }}">
+                                <button type="submit" name="action" value="approve">Approve</button>
+                                <button type="submit" name="action" value="reject">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Staff Leave Reports</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Leave Reason</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in staff_leaves %}
+                    <tr>
+                        <td>{{ leave.staff.staff_name }}</td>
+                        <td>{{ leave.reason }}</td>
+                        <td>{{ leave.start_date }}</td>
+                        <td>{{ leave.end_date }}</td>
+                        <td>{{ leave.status }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'manage_leaves' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="leave_type" value="staff">
+                                <input type="hidden" name="leave_id" value="{{ leave.id }}">
+                                <button type="submit" name="action" value="approve">Approve</button>
+                                <button type="submit" name="action" value="reject">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

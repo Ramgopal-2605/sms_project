@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Links</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Staff Links</h1>
+    <ul>
+        <!-- Profile Management -->
+        <li><a href="{% url 'update_staff_profile' staff_id=staff_id %}">Update Profile</a></li>
+        <li><a href="{% url 'view_salary_particulars' staff_id=staff_id %}">View Salary Particulars</a></li>
+        
+        <!-- Class Management -->
+        {% if class_id %}
+            <li><a href="{% url 'view_class_students' class_id=class_id %}">View Class Students</a></li>
+            <li><a href="{% url 'class_students' class_id=class_id %}">Class Students</a></li>
+            <li><a href="{% url 'view_class_subjects' class_id=class_id %}">View Class Subjects</a></li>
+            <li><a href="{% url 'class_subjects' class_id=class_id %}">Class Subjects</a></li>
+            <li><a href="{% url 'view_class_timetable' class_id=class_id %}">View Class Timetable</a></li>
+        {% else %}
+            <li>No class assigned to view students.</li>
+        {% endif %}
+
+        <!-- Attendance Management -->
+        <li><a href="{% url 'manage_class_attendance' %}">Manage Class Attendance</a></li>
+        {% comment %} <li><a href="{% url 'mark_attendance' class_id=class_id %}">Mark Attendance</a></li> {% endcomment %}
+        <li><a href="{% url 'manage_self_attendance' staff_id=staff_id %}">Manage Self Attendance</a></li>
+
+        <!-- Marks Management -->
+        <li><a href="{% url 'manage_student_marks' %}">Manage Student Marks</a></li>
+        {% comment %} <li><a href="{% url 'record_student_marks' subject_id=subject_id %}">Record Student Marks</a></li> {% endcomment %}
+
+        <!-- Notifications -->
+        <li><a href="{% url 'view_notifications' %}">View Notifications</a></li>
+
+        <!-- Subject Timetable -->
+        {% comment %} <li><a href="{% url 'view_subject_timetable' subject_id=subject_id %}">View Subject Timetable</a></li> {% endcomment %}
+
+        <!-- Logout -->
+        <li><a href="{% url 'staff_logout' %}" onclick="return confirm('Are you sure you want to log out?');">Logout</a></li>
+    </ul>
+</body>
+</html>

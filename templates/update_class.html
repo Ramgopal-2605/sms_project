@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Class</title>
+</head>
+<body>
+    <h1>Update Class</h1>
+
+    <form method="POST" action="{% url 'update_class' class.id %}">
+        {% csrf_token %}
+        <label for="class_name">Class Name:</label>
+        <input type="text" id="class_name" name="class_name" value="{{ class.class_name }}" required>
+        <br>
+
+        <label for="section">Section:</label>
+        <input type="text" id="section" name="section" value="{{ class.section }}" required>
+        <br>
+
+        <button type="submit">Update Class</button>
+    </form>
+</body>
+</html>

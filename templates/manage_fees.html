@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Fee Structure</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Fee Structure</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fee in fees %}
+                    <tr>
+                        <td>{{ fee.class_assigned.class_name }}</td>
+                        <td>{{ fee.amount }}</td>
+                        <td>
+                            <a href="{% url 'edit_fee_structure' fee.id %}">Edit</a>
+                            <a href="{% url 'delete_fee_structure' fee.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h3>Add/Update Fee Structure</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Add form fields for fee structure -->
+            <input type="text" name="class_assigned" placeholder="Class" required>
+            <input type="number" name="amount" placeholder="Amount" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

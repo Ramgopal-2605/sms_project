@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Classes</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Manage Classes</h2>
+
+    {% if messages %}
+        <div class="alert alert-success">
+            {% for message in messages %}
+                {{ message }}<br>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'manage_classes' %}" id="classForm">
+        {% csrf_token %}
+        <div id="classFields">
+            <div class="form-group">
+                <label>Class Name:</label>
+                <input type="text" name="class_name" class="form-control" placeholder="Class Name" required>
+            </div>
+        </div>
+        <button type="button" class="btn btn-secondary" id="addClass">Add Another Class</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <hr>
+
+    <h3>Existing Classes</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Class Name</th>
+                {% comment %} <th>Section</th> {% endcomment %}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for class in classes %}
+                <tr>
+                    <td>{{ class.class_name }}</td>
+
+                    <td>
+                        <button class="btn btn-warning btn-sm edit-btn" 
+                                data-id="{{ class.id }}" 
+                                data-name="{{ class.class_name }}">
+                            Edit
+                        </button>
+                        <form action="{% url 'delete_class' class.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">No classes available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#addClass').click(function() {
+            $('#classFields').append(`
+                <div class="form-group">
+                    <label>Class Name:</label>
+                    <input type="text" name="class_name" class="form-control" placeholder="Class Name" required>
+                    </div>
+            `);
+        });
+    });
+</script>
+
+</body>
+</html>
+
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Classes</title>
+    <link rel="stylesheet" href="{% static 'styles5.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Manage Classes</h2>
+
+        <!-- Display messages -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="POST" action="{% url 'manage_classes' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="class_name">Class Name:</label>
+                <input type="text" id="class_name" name="class_name" required>
+            </div>
+            <div class="form-group">
+                <label for="section">Section:</label>
+                <input type="text" id="section" name="section" required>
+            </div>
+            <input type="hidden" id="class_id" name="class_id">
+            <button type="submit">Add Class</button>
+        </form>
+
+        <h3>Existing Classes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Class Name</th>
+                    <th>Section</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for class_instance in classes %}
+                    <tr>
+                        <td>{{ class_instance.class_name }}</td>
+                        <td>{{ class_instance.section }}</td>
+                        <td>
+                            <button onclick="editClass('{{ class_instance.id }}', '{{ class_instance.class_name }}', '{{ class_instance.section }}')">Edit</button>
+                            <form method="POST" action="{% url 'delete_class' class_instance.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this class?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function editClass(classId, className, section) {
+            document.getElementById('class_id').value = classId;
+            document.getElementById('class_name').value = className;
+            document.getElementById('section').value = section;
+        }
+    </script>
+</body>
+</html> {% endcomment %}

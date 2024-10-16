@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'enroll_student' %}">Manage Students</a></li>
+                <li><a href="{% url 'enroll_staff' %}">Manage Staff</a></li>
+                <li><a href="{% url 'manage_classes' %}">Manage Classes</a></li>
+                <li><a href="{% url 'manage_subjects' %}">Manage Subjects</a></li>
+                <li><a href="{% url 'manage_events' %}">Manage Events</a></li>
+                <li><a href="{% url 'manage_notifications' %}">Manage Notifications</a></li>
+                <li><a href="{% url 'monitor_fees' %}">Monitor Fees</a></li>
+                <li><a href="{% url 'view_leave_requests' %}">View Leave Requests</a></li>
+                <li><a href="{% url 'view_feedback' %}">View Feedback</a></li>
+                <li><a href="{% url 'staff_logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="main-content">
+            <h2>Overview</h2>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Total Students</h3>
+                    <p>{{ total_students }}</p>
+                </div>
+                <div class="card">
+                    <h3>Total Staff</h3>
+                    <p>{{ total_staff }}</p>
+                </div>
+                <div class="card">
+                    <h3>Total Classes</h3>
+                    <p>{{ total_classes }}</p>
+                </div>
+                <div class="card">
+                    <h3>Total Events</h3>
+                    <p>{{ total_events }}</p>
+                </div>
+            </div>
+        </div>
+
+        <aside class="right-sidebar">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="{% url 'registration' %}">Register Admin</a></li>
+                <li><a href="{% url 'enroll_student' %}">Enroll Student</a></li>
+                <li><a href="{% url 'enroll_staff' %}">Enroll Staff</a></li>
+                <li><a href="{% url 'manage_classes' %}">Manage Classes</a></li>
+                <li><a href="{% url 'view_attendance_reports' %}">View Attendance Reports</a></li>
+                <li><a href="{% url 'fee_report' %}">Fee Report</a></li>
+                <li><a href="{% url 'manage_exam_schedule' %}">Manage Exams</a></li>
+                <li><a href="{% url 'generate_exam_report' %}">Generate Exam Report</a></li>
+            </ul>
+        </aside>
+    </main>
+    <footer>
+        <p>&copy; 2024 Your Institution Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>

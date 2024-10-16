@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .notifications, .profile-info, .assigned-subject {
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #343a40;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .logout {
+            text-align: right;
+        }
+        .logout a {
+            color: #dc3545;
+            text-decoration: none;
+        }
+        .logout a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ staff.name }}</h1>
+        <div class="profile-info">
+            <h2>Profile Information</h2>
+            <p><strong>Staff ID:</strong> {{ staff.staff_id }}</p>
+            <p><strong>Email:</strong> {{ staff.email }}</p>
+            <p><strong>Phone:</strong> {{ staff.phone }}</p>
+        </div>
+
+        <div class="assigned-subject">
+            <h2>Assigned Subject</h2>
+            <p>{{ assigned_subject }}</p>
+        </div>
+
+        <div class="notifications">
+            <h2>Notifications</h2>
+            {% if notifications %}
+                <ul>
+                    {% for notification in notifications %}
+                        <li>{{ notification.message }} - <em>{{ notification.date_created|date:"Y-m-d H:i" }}</em></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No notifications at this time.</p>
+            {% endif %}
+        </div>
+
+        <div class="logout">
+            <li><a href="{% url 'staff_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'staff_urls' %}">All Urls</a></li>
+            <a href="{% url 'staff_logout' %}" onclick="return confirm('Are you sure you want to log out?');">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
+    <footer>
+        <p>&copy; 2024 Your School Name. All rights reserved.
+    </footer>

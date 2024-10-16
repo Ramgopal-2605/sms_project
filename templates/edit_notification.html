@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Notification</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Notification</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <textarea name="message" required>{{ notification.message }}</textarea>
+            <button type="submit">Update Notification</button>
+        </form>
+
+        <a href="{% url 'manage_notifications' %}">Back to Notifications</a>
+    </div>
+</body>
+</html>

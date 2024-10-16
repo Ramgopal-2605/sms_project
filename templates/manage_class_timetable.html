@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Class Timetable</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Manage Class Timetable</h2>
+
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'manage_class_timetable' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="class_assigned">Class Assigned:</label>
+                <select id="class_assigned" name="class_assigned" required>
+                    <option value="">Select Class</option>
+                    {% for class_instance in classes %}
+                        <option value="{{ class_instance.id }}">{{ class_instance.class_name }} - {{ class_instance.section }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <select id="subject" name="subject" required>
+                    <option value="">Select Subject</option>
+                    {% for subject_instance in subjects %}
+                        <option value="{{ subject_instance.id }}">{{ subject_instance.subject_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="staff">Staff:</label>
+                <select id="staff" name="staff" required>
+                    <option value="">Select Staff</option>
+                    {% for staff_instance in staff_members %}
+                        <option value="{{ staff_instance.id }}">{{ staff_instance.staff_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="day_of_week">Day of Week:</label>
+                <select id="day_of_week" name="day_of_week" required>
+                    <option value="">Select Day</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="start_time">Start Time:</label>
+                <input type="time" id="start_time" name="start_time" required>
+            </div>
+            <div class="form-group">
+                <label for="end_time">End Time:</label>
+                <input type="time" id="end_time" name="end_time" required>
+            </div>
+            <input type="hidden" id="timetable_id" name="timetable_id">
+            <button type="submit">Add/Update Timetable</button>
+        </form>
+
+        <h3>Existing Timetable Entries</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Subject</th>
+                    <th>Staff</th>
+                    <th>Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for timetable_instance in timetables %}
+                    <tr>
+                        <td>{{ timetable_instance.class_assigned.class_name }} - {{ timetable_instance.class_assigned.section }}</td>
+                        <td>{{ timetable_instance.subject.subject_name }}</td>
+                        <td>{{ timetable_instance.staff.staff_name }}</td>
+                        <td>{{ timetable_instance.day_of_week }}</td>
+                        <td>{{ timetable_instance.start_time }}</td>
+                        <td>{{ timetable_instance.end_time }}</td>
+                        <td>
+                            <button onclick="editTimetable('{{ timetable_instance.id }}', '{{ timetable_instance.class_assigned.id }}', '{{ timetable_instance.subject.id }}', '{{ timetable_instance.staff.id }}', '{{ timetable_instance.day_of_week }}', '{{ timetable_instance.start_time }}', '{{ timetable_instance.end_time }}')">Edit</button>
+                            <form method="POST" action="{% url 'delete_class_timetable' timetable_instance.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this entry?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7">No timetable entries found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function editTimetable(timetableId, classId, subjectId, staffId, dayOfWeek, startTime, endTime) {
+            document.getElementById('timetable_id').value = timetableId;
+            document.getElementById('class_assigned').value = classId;
+            document.getElementById('subject').value = subjectId;
+            document.getElementById('staff').value = staffId;
+            document.getElementById('day_of_week').value = dayOfWeek;
+            document.getElementById('start_time').value = startTime;
+            document.getElementById('end_time').value = endTime;
+        }
+    </script>
+</body>
+</html>

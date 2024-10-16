@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #007BFF; /* Primary color */
+            padding: 10px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .alert {
+            background-color: #f8d7da; /* Light red */
+            color: #721c24;
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+        .card {
+            padding: 20px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <h1>Student Dashboard</h1>
+        <nav>
+            <a href="{% url 'student_dashboard' %}">Dashboard</a>
+            <a href="{% url 'update_student_profile' student.student_id %}">Update Profile</a>
+            <a href="{% url 'view_attendance' student.student_id %}">View Attendance</a>
+            <a href="{% url 'view_timetable' student.student_id %}">View Timetable</a>
+            <a href="{% url 'student_logout' %}">Logout</a>
+            <a href="{% url 'student_urls' %}">ALL Urls</a>
+        </nav>
+    </header>
+    
+    <main class="main-content">
+        {% if messages %}
+            <div class="alert">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h2>Welcome, {{ student.student_name }}</h2>
+
+        <div class="card">
+            <h3>Your Enrolled Class:</h3>
+            <p>{{ enrolled_class }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Latest Notifications:</h3>
+            {% if notifications %}
+                <ul>
+                    {% for notification in notifications %}
+                        <li>{{ notification.message }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No notifications available.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Institution Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>

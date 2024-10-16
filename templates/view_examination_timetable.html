@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination Timetable</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Examination Timetable for {{ student.enrollment.class_assigned.class_name }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Exam</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exam in exam_timetable %}
+                    <tr>
+                        <td>{{ exam.exam_date }}</td>
+                        <td>{{ exam.name_of_exam }}</td>
+                        <td>{{ exam.start_time }} - {{ exam.end_time }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'student_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

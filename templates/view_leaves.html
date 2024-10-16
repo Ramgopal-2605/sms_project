@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Leave Requests</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Leave Requests</h2>
+        
+        <h3>Staff Leave Requests</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Leave Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in staff_leaves %}
+                    <tr>
+                        <td>{{ leave.staff.staff_name }}</td>
+                        <td>{{ leave.leave_date }}</td>
+                        <td>{{ leave.reason }}</td>
+                        <td>{{ leave.approved|yesno:"Approved,Pending" }}</td>
+                        <td>
+                            {% if not leave.approved %}
+                                <a href="{% url 'approve_leave' leave.id 'staff' %}">Approve</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Student Leave Requests</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Leave Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in student_leaves %}
+                    <tr>
+                        <td>{{ leave.student.student_name }}</td>
+                        <td>{{ leave.leave_date }}</td>
+                        <td>{{ leave.reason }}</td>
+                        <td>{{ leave.approved|yesno:"Approved,Pending" }}</td>
+                        <td>
+                            {% if not leave.approved %}
+                                <a href="{% url 'approve_leave' leave.id 'student' %}">Approve</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

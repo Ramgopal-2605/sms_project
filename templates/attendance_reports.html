@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Reports</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Attendance Reports</h2>
+
+        <h3>Student Attendance</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Class</th>
+                    <th>Date</th>
+                    <th>Present</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in student_attendance %}
+                    <tr>
+                        <td>{{ record.student.student_name }}</td>
+                        <td>{{ record.class_assigned }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.is_present|yesno:"Yes,No" }}</td>
+                        <td>{{ record.reason }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Staff Attendance</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Date</th>
+                    <th>Present</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in staff_attendance %}
+                    <tr>
+                        <td>{{ record.staff.staff_name }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.is_present|yesno:"Yes,No" }}</td>
+                        <td>{{ record.reason }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

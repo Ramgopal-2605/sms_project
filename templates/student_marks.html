@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Student Marks</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Select a Subject to Record Marks</h2>
+        <ul>
+            {% for subject in subjects %}
+                <li><a href="{% url 'record_student_marks' subject.id %}">{{ subject.subject_name }}</a></li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'staff_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

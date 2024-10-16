@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Students</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Select a Class to View Students</h2>
+        <ul>
+            {% for class in classes %}
+                <li><a href="{% url 'class_students' class.id %}">{{ class.class_name }}</a></li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'staff_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

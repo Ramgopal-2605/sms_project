@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enroll Student</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Enroll New Student</h2>
+        <form method="POST" action="{% url 'enroll_student' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="student_name">Student Name:</label>
+                <input type="text" id="student_name" name="student_name" required>
+            </div>
+            <div class="form-group">
+                <label for="student_id">Student ID:</label>
+                <input type="text" id="student_id" name="student_id" required>
+            </div>
+            <div class="form-group">
+                <label for="student_pwd">Password:</label>
+                <input type="password" id="student_pwd" name="student_pwd" required>
+            </div>
+            <div class="form-group">
+                <label for="father_name">Father's Name:</label>
+                <input type="text" id="father_name" name="father_name" required>
+            </div>
+            <div class="form-group">
+                <label for="mother_name">Mother's Name:</label>
+                <input type="text" id="mother_name" name="mother_name" required>
+            </div>
+            <div class="form-group">
+                <label for="class_assigned">Class Assigned:</label>
+                <select id="class_assigned" name="class_assigned" required>
+                    <option value="">Select Class</option>
+                    {% for class in classes %}
+                        <option value="{{ class.id }}">{{ class.class_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fee_details">Fee Details:</label>
+                <textarea id="fee_details" name="fee_details" required></textarea>
+            </div>
+            <button type="submit">Enroll Student</button>
+        </form>
+        <p><a href="{% url 'admin_dashboard' %}">Back to Dashboard</a></p>
+    </div>
+</body>
+</html>

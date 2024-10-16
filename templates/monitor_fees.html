@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Fees</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Monitor Student Fees</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Amount Due</th>
+                    <th>Amount Paid</th>
+                    <th>Installments</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fee in student_fees %}
+                    <tr>
+                        <td>{{ fee.student.student_name }}</td>
+                        <td>{{ fee.amount_due }}</td>
+                        <td>{{ fee.amount_paid }}</td>
+                        <td>{{ fee.installments }}</td>
+                        <td>{{ fee.due_date }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'fee_report' fee.student.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">View Report</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6">No fee records found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Generate Report for a Specific Student</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="student_id">Select Student:</label>
+            <select name="student_id" id="student_id">
+                {% for fee in student_fees %}
+                    <option value="{{ fee.student.id }}">{{ fee.student.student_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Generate Report</button>
+        </form>
+    </div>
+</body>
+</html>

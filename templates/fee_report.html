@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Report</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Fee Report</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Fee Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in report_data %}
+                    <tr>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.amount }}</td>
+                        <td>{{ record.status }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No fee records found for this student.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <a href="{% url 'monitor_fees' %}">Back to Monitor Fees</a>
+    </div>
+</body>
+</html>

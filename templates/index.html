@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles4.css' %}">
+    <title>Welcome to Our School</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our School</h1>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="{% url 'registration' %}">Admin Registration</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="introduction">
+            <h2>About Our School</h2>
+            <p>Our school is committed to providing high-quality education and nurturing the minds of our students. We believe in fostering a supportive and inclusive environment that encourages learning, creativity, and personal growth.</p>
+            <p>With a dedicated team of educators, modern facilities, and a wide range of extracurricular activities, we aim to equip our students with the skills and knowledge they need to succeed in the future.</p>
+        </section>
+        <section class="mission">
+            <h2>Our Mission</h2>
+            <p>Our mission is to inspire and empower students to achieve their full potential. We strive to cultivate a love for learning and help our students develop critical thinking, collaboration, and leadership skills.</p>
+        </section>
+        <section class="vision">
+            <h2>Our Vision</h2>
+            <p>We envision a school community where every student feels valued and motivated to pursue their dreams. Together, we can create a positive impact in the world.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Our School. All rights reserved.</p>
+    </footer>
+</body>
+</html>

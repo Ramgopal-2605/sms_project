@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Staff Profile</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Update Staff Profile</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="address">Address:</label>
+            <input type="text" name="address" value="{{ staff.address }}" required>
+            
+            <label for="date_of_birth">Date of Birth:</label>
+            <input type="date" name="date_of_birth" value="{{ staff.date_of_birth }}" required>
+            
+            <label for="married_status">Married Status:</label>
+            <select name="married_status">
+                <option value="True" {% if staff.married_status %}selected{% endif %}>Yes</option>
+                <option value="False" {% if not staff.married_status %}selected{% endif %}>No</option>
+            </select>
+            
+            <label for="experience_in_years">Experience in Years:</label>
+            <input type="number" name="experience_in_years" value="{{ staff.experience_in_years }}" required>
+            
+            <button type="submit">Update Profile</button>
+        </form>
+        <a href="{% url 'staff_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

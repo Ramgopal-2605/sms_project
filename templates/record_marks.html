@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Student Marks</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Record Marks for Subject</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="date">Date:</label>
+            <input type="date" name="date" required>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.student_name }}</td>
+                            <td>
+                                <input type="text" name="student_{{ student.id }}" placeholder="Enter grade" required>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Record Marks</button>
+        </form>
+        <a href="{% url 'staff_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

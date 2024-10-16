@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Links</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Links</h1>
+    <ul>
+        <li><a href="{% url 'update_student_profile' student_id=student_id %}">Update Profile</a></li>
+        <li><a href="{% url 'view_attendance' student_id=student_id %}">View Attendance</a></li>
+        <li><a href="{% url 'view_attendance_month' student_id=student_id month=1 year=2024 %}">View Attendance for January 2024</a></li>
+        <li><a href="{% url 'view_attendance_range' student_id=student_id start_date='2024-01-01' end_date='2024-01-31' %}">View Attendance Range</a></li>
+        <li><a href="{% url 'view_timetable' student_id=student_id %}">View Timetable</a></li>
+        <li><a href="{% url 'view_examination_timetable' student_id=student_id %}">View Exam Timetable</a></li>
+        {% comment %} <li><a href="{% url 'view_notifications' student_id=student_id %}">View Notifications</a></li> {% endcomment %}
+        <li><a href="{% url 'manage_feedback' student_id=student_id %}">Manage Feedback</a></li>
+        <li><a href="{% url 'view_fee_particulars' student_id=student_id %}">View Fees</a></li>
+        <li><a href="{% url 'student_logout' %}" onclick="return confirm('Are you sure you want to log out?');">Logout</a></li>
+        <li><a href="{% url 'student_dashboard' %}">Student Dashboard</a></li>
+    </ul>
+</body>
+</html>
