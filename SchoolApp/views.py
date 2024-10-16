@@ -22,7 +22,8 @@ from .models import AdminPrincipalRegistration
 from .serializers import AdminPrincipalRegistrationSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
 from .models import (
     AdminPrincipalRegistration,
     Class,
@@ -241,6 +242,7 @@ from .serializers import (
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def index(request):
     return Response({"message": "Welcome to the API"}, status=status.HTTP_200_OK)
 
@@ -250,6 +252,7 @@ def logout_view(request):
     return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def admin_registration(request):
     serializer = AdminPrincipalRegistrationSerializer(data=request.data)
 
